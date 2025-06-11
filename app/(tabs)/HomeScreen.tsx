@@ -44,6 +44,10 @@ export default function HomeScreen() {
   const navigateToSendMoney = () => {
     router.push('/(tabs)/SendMoney');
   };
+
+    const navigateToWithdraw = () => {
+        router.push('/(tabs)/Withdraw');
+    };
   
 
   return (
