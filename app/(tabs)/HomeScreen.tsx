@@ -41,13 +41,18 @@ export default function HomeScreen() {
     router.replace('/'); // Go back to login
   };
 
+  const navigateToSendMoney = () => {
+    router.push('/');
+  };
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>ZaymaPay 💸</Text>
       <Text style={styles.balance}>Balance: Ksh {balance}</Text>
 
       <View style={styles.buttonContainer}>
-        <Button title="Send Money" onPress={handleSendMoney} color="#27ae60" />
+        <Button title="Send Money" onPress={navigateToSendMoney} color="#27ae60" />
         <Button title="Withdraw" onPress={handleWithdraw} color="#e67e22" />
       </View>
 
