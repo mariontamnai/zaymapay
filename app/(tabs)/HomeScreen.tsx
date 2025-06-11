@@ -42,7 +42,7 @@ export default function HomeScreen() {
   };
 
   const navigateToSendMoney = () => {
-    router.push('/');
+    router.push('/(tabs)/SendMoney');
   };
   
 
