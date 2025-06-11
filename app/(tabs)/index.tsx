@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
 export default function LoginScreen() {
   const [pin, setPin] = useState('');
+  const router = useRouter();
 
   const handleLogin = () => {
     if (pin === '1234') {
-      Alert.alert('Success', 'Welcome to ZaymaPay!');
+      router.push('/(tabs)/HomeScreen'); // Navigate to HomeScreen on successful login
     } else {
       Alert.alert('Error', 'Invalid PIN. Try again.');
     }
