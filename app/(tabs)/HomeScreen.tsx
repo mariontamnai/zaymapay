@@ -21,7 +21,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to ZaymaPay 💸</Text>
 
       <View style={styles.balanceCard}>
         <Text style={styles.balanceLabel}>Your Balance</Text>
