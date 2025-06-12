@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useZayma } from './ZaymaContext';
+
 
 export default function SendMoney() {
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
+  const { sendMoney } = useZayma();
+
   const router = useRouter();
 
   const handleSend = () => {
     const amountNum = parseFloat(amount);
+
+    sendMoney(`Sent to ${phone}`, amountNum);
     if (!phone || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Enter a valid phone number and amount.');
       return;

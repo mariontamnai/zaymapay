@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, FlatList, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useZayma } from './ZaymaContext'; // Assuming you have a context for global state management
 
 export default function HomeScreen() {
-  const [balance, setBalance] = useState(5000); // Starting balance
+  const { balance: initialBalance } = useZayma(); // Starting balance
+  const [balance, setBalance] = useState(initialBalance);
   const [transactions, setTransactions] = useState([
     { id: '1', title: 'Received from Mom', amount: 2000 },
     { id: '2', title: 'Sent to John', amount: -1000 },

@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useZayma } from './ZaymaContext';
+
 
 export default function Withdraw() {
   const [account, setAccount] = useState('');
   const [amount, setAmount] = useState('');
+  const { withdrawMoney } = useZayma();
+
   const router = useRouter();
 
   const handleWithdraw = () => {
     const amountNum = parseFloat(amount);
+
+    withdrawMoney(`Withdraw to ${account}`, amountNum);
     if (!account || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Please enter a valid account number and amount.');
       return;
