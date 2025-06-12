@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext } from 'react';
+// ZaymaContext.tsx
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Transaction = {
   id: string;
@@ -6,41 +7,60 @@ type Transaction = {
   amount: number;
 };
 
-type ZaymaContextType = {
+type AuthContextType = {
+  user: string | null;
+  login: (email: string, password: string) => boolean;
+  signup: (email: string, password: string) => void;
+  logout: () => void;
   balance: number;
   transactions: Transaction[];
-  sendMoney: (title: string, amount: number) => void;
-  withdrawMoney: (title: string, amount: number) => void;
+  sendMoney: (amount: number, to: string) => void;
+  withdrawMoney: (amount: number) => void;
 };
 
-const ZaymaContext = createContext<ZaymaContextType | null>(null);
+const ZaymaContext = createContext<AuthContextType | undefined>(undefined);
 
-export const ZaymaProvider = ({ children }: { children: React.ReactNode }) => {
+export const ZaymaProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<string | null>(null);
+  const [emailStore, setEmailStore] = useState('');
+  const [passwordStore, setPasswordStore] = useState('');
   const [balance, setBalance] = useState(5000);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const sendMoney = (title: string, amount: number) => {
-    if (amount <= balance) {
-      setBalance(prev => prev - amount);
-      setTransactions(prev => [
-        { id: Date.now().toString(), title, amount: -amount },
-        ...prev,
-      ]);
-    }
+  const signup = (email: string, password: string) => {
+    setEmailStore(email);
+    setPasswordStore(password);
+    setUser(email);
   };
 
-  const withdrawMoney = (title: string, amount: number) => {
-    if (amount <= balance) {
-      setBalance(prev => prev - amount);
-      setTransactions(prev => [
-        { id: Date.now().toString(), title, amount: -amount },
-        ...prev,
-      ]);
-    }
+  const login = (email: string, password: string) => {
+    const match = email === emailStore && password === passwordStore;
+    if (match) setUser(email);
+    return match;
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
+  const sendMoney = (amount: number, to: string) => {
+    setBalance(prev => prev - amount);
+    setTransactions(prev => [
+      { id: Date.now().toString(), title: `Sent to ${to}`, amount: -amount },
+      ...prev,
+    ]);
+  };
+
+  const withdrawMoney = (amount: number) => {
+    setBalance(prev => prev - amount);
+    setTransactions(prev => [
+      { id: Date.now().toString(), title: 'Withdraw', amount: -amount },
+      ...prev,
+    ]);
   };
 
   return (
-    <ZaymaContext.Provider value={{ balance, transactions, sendMoney, withdrawMoney }}>
+    <ZaymaContext.Provider value={{ user, signup, login, logout, balance, transactions, sendMoney, withdrawMoney }}>
       {children}
     </ZaymaContext.Provider>
   );
@@ -48,6 +68,6 @@ export const ZaymaProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useZayma = () => {
   const context = useContext(ZaymaContext);
-  if (!context) throw new Error('ZaymaContext not found');
+  if (!context) throw new Error('useZayma must be used within ZaymaProvider');
   return context;
 };

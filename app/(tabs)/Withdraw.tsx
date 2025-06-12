@@ -14,7 +14,7 @@ export default function Withdraw() {
   const handleWithdraw = () => {
     const amountNum = parseFloat(amount);
 
-    withdrawMoney(`Withdraw to ${account}`, amountNum);
+    withdrawMoney(amountNum);
     if (!account || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Please enter a valid account number and amount.');
       return;
