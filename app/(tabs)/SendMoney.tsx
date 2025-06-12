@@ -14,7 +14,7 @@ export default function SendMoney() {
   const handleSend = () => {
     const amountNum = parseFloat(amount);
 
-    sendMoney(`Sent to ${phone}`, amountNum);
+    sendMoney(amountNum, phone);
     if (!phone || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Enter a valid phone number and amount.');
       return;

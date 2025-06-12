@@ -1,29 +1,42 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { useRouter, Slot } from 'expo-router';
+import { useZayma, ZaymaProvider } from './(tabs)/ZaymaContext';
+import { useState, useEffect } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+function RootLayoutInner() {
+  const { user } = useZayma();
+  const router = useRouter();
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!user) {
+        router.replace('/AuthScreen'); // go to Auth
+      } else {
+        router.replace('/(tabs)/HomeScreen'); // go to home
+      }
+      setLoading(false);
+    }, 1000);
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
+    return () => clearTimeout(timeout);
+  }, [user]);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#27ae60" />
+      </View>
+    );
   }
 
+  return <Slot />;
+}
+
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <ZaymaProvider>
+      <RootLayoutInner />
+    </ZaymaProvider>
   );
 }
+
