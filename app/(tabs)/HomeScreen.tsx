@@ -1,81 +1,48 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useZayma } from './ZaymaContext'; // Assuming you have a context for global state management
+import { useZayma } from './ZaymaContext';
 
 export default function HomeScreen() {
-  const { balance: initialBalance } = useZayma(); // Starting balance
-  const [balance, setBalance] = useState(initialBalance);
-  const [transactions, setTransactions] = useState([
-    { id: '1', title: 'Received from Mom', amount: 2000 },
-    { id: '2', title: 'Sent to John', amount: -1000 },
-  ]);
-
   const router = useRouter();
+  const { balance, transactions } = useZayma();
 
-  const handleSendMoney = () => {
-    if (balance >= 500) {
-      setBalance(balance - 500);
-      setTransactions([
-        { id: Date.now().toString(), title: 'Sent to friend', amount: -500 },
-        ...transactions,
-      ]);
-      Alert.alert('Success', 'You sent Ksh 500');
-    } else {
-      Alert.alert('Error', 'Insufficient funds');
-    }
-  };
-
-  const handleWithdraw = () => {
-    if (balance >= 300) {
-      setBalance(balance - 300);
-      setTransactions([
-        { id: Date.now().toString(), title: 'Withdraw to Bank', amount: -300 },
-        ...transactions,
-      ]);
-      Alert.alert('Success', 'You withdrew Ksh 300');
-    } else {
-      Alert.alert('Error', 'Insufficient balance');
-    }
-  };
-
-  const handleLogout = () => {
-    router.replace('/'); // Go back to login
-  };
-
-  const navigateToSendMoney = () => {
-    router.push('/(tabs)/SendMoney');
-  };
-
-    const navigateToWithdraw = () => {
-        router.push('/(tabs)/Withdraw');
-    };
-  
+  const handleSendMoney = () => router.push('/(tabs)/SendMoney');
+  const handleWithdraw = () => router.push('/(tabs)/Withdraw');
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ZaymaPay 💸</Text>
-      <Text style={styles.balance}>Balance: Ksh {balance}</Text>
+      <Text style={styles.welcome}>Welcome to ZaymaPay 💸</Text>
 
-      <View style={styles.buttonContainer}>
-        <Button title="Send Money" onPress={navigateToSendMoney} color="#27ae60" />
-        <Button title="Withdraw" onPress={handleWithdraw} color="#e67e22" />
+      <View style={styles.balanceCard}>
+        <Text style={styles.balanceLabel}>Your Balance</Text>
+        <Text style={styles.balanceAmount}>Ksh {balance.toFixed(2)}</Text>
       </View>
 
-      <Text style={styles.historyTitle}>Transaction History</Text>
+      <View style={styles.actions}>
+        <TouchableOpacity style={styles.actionButton} onPress={handleSendMoney}>
+          <Text style={styles.actionText}>Send</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={handleWithdraw}>
+          <Text style={styles.actionText}>Withdraw</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.sectionTitle}>Recent Transactions</Text>
+
       <FlatList
         data={transactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Text style={styles.transaction}>
-            {item.title}: {item.amount > 0 ? '+' : ''}Ksh {item.amount}
-          </Text>
+          <View style={styles.transactionItem}>
+            <Text style={styles.transactionTitle}>{item.title}</Text>
+            <Text style={[styles.transactionAmount, { color: item.amount < 0 ? '#e74c3c' : '#2ecc71' }]}>
+              {item.amount < 0 ? '-' : '+'} Ksh {Math.abs(item.amount)}
+            </Text>
+          </View>
         )}
+        ListEmptyComponent={<Text style={styles.noData}>No transactions yet</Text>}
       />
-
-      <View style={{ marginTop: 30 }}>
-        <Button title="Logout" onPress={handleLogout} color="#c0392b" />
-      </View>
     </View>
   );
 }
@@ -83,36 +50,70 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
-    alignItems: 'center',
-    backgroundColor: '#ecf0f1',
-    paddingHorizontal: 20,
+    backgroundColor: '#f4f6f8',
+    padding: 20,
   },
-  title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  balance: {
+  welcome: {
     fontSize: 20,
-    marginBottom: 20,
-    color: '#2c3e50',
+    marginBottom: 10,
+    fontWeight: '500',
   },
-  buttonContainer: {
+  balanceCard: {
+    backgroundColor: '#27ae60',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+  balanceLabel: {
+    color: '#ecf0f1',
+    fontSize: 16,
+  },
+  balanceAmount: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 15,
-    marginBottom: 20,
+    marginBottom: 30,
   },
-  historyTitle: {
+  actionButton: {
+    flex: 1,
+    backgroundColor: '#2980b9',
+    padding: 15,
+    marginHorizontal: 5,
+    borderRadius: 10,
+  },
+  actionText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
     marginBottom: 10,
+    fontWeight: '500',
   },
-  transaction: {
+  transactionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+  },
+  transactionTitle: {
     fontSize: 16,
-    marginBottom: 5,
-    color: '#34495e',
+    color: '#2c3e50',
+  },
+  transactionAmount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  noData: {
+    color: '#7f8c8d',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
