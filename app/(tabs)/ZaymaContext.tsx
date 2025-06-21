@@ -9,7 +9,7 @@ type Transaction = {
 
 type AuthContextType = {
   user: string | null;
-  login: (email: string, password: string) => boolean;
+  login: (password: string) => boolean;
   signup: (email: string, password: string) => void;
   logout: () => void;
   balance: number;
@@ -33,9 +33,9 @@ export const ZaymaProvider = ({ children }: { children: ReactNode }) => {
     setUser(email);
   };
 
-  const login = (email: string, password: string) => {
-    const match = email === emailStore && password === passwordStore;
-    if (match) setUser(email);
+  const login = ( password: string) => {
+    const match = password === passwordStore;
+    if (match) setUser(emailStore);
     return match;
   };
 

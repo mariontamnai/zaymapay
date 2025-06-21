@@ -4,22 +4,21 @@ import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useZayma();
   const router = useRouter();
 
   const handleLogin = () => {
-    if (!email || !password) {
+    if (!password) {
       Alert.alert('Missing fields', 'Please enter email and password');
       return;
     }
 
-    const success = login(email, password);
+    const success = login(password);
     if (success) {
       router.replace('/(tabs)/HomeScreen');
     } else {
-      Alert.alert('Login Failed', 'Wrong email or password');
+      Alert.alert('Login Failed', 'Wrong password');
     }
   };
 
@@ -31,8 +30,8 @@ export default function LoginScreen() {
         placeholder="Email"
         keyboardType="email-address"
         style={styles.input}
-        value={email}
-        onChangeText={setEmail}
+        value={password}
+        onChangeText={setPassword}
       />
       <TextInput
         placeholder="Password"
