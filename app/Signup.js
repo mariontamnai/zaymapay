@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
-export default function LoginScreen() {
+export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useZayma();
+  const { signup } = useZayma();
   const router = useRouter();
 
-  const handleLogin = () => {
+  const handleSignup = () => {
     if (!email || !password) {
       Alert.alert('Missing fields', 'Please enter email and password');
       return;
     }
 
-    const success = login(email, password);
-    if (success) {
-      router.replace('/(tabs)/HomeScreen');
-    } else {
-      Alert.alert('Login Failed', 'Wrong email or password');
-    }
+    signup(email, password);
+    Alert.alert('Success', 'Account created successfully!');
+    router.replace('/'); // Go back to login screen
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ZaymaPay 🔐</Text>
+      <Text style={styles.title}>Create Account 🔐</Text>
 
       <TextInput
         placeholder="Email"
@@ -42,18 +39,14 @@ export default function LoginScreen() {
         onChangeText={setPassword}
       />
 
-      <Button title="Login" onPress={handleLogin} />
-
-      <TouchableOpacity onPress={() => router.push('/signup')} style={styles.signupLink}>
-        <Text style={styles.signupText}>Don’t have an account? Sign up</Text>
-      </TouchableOpacity>
+      <Button title="Sign Up" onPress={handleSignup} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 28, marginBottom: 20, fontWeight: 'bold', textAlign: 'center', color: '#2c3e50' },
+  title: { fontSize: 28, marginBottom: 20, fontWeight: 'bold', textAlign: 'center', color: '#27ae60' },
   input: {
     height: 50,
     borderColor: '#ccc',
@@ -63,6 +56,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: '#f9f9f9',
   },
-  signupLink: { marginTop: 20, alignSelf: 'center' },
-  signupText: { color: '#3498db', fontSize: 16 },
 });
