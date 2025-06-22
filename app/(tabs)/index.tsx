@@ -4,7 +4,7 @@ import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
-import zaymaCardImage =require('../assets/images/credit-card-placed-cart-pay-product.png'); 
+import zaymaCardImage from'../../assets/images/credit-card-placed-cart-pay-product.png'; 
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');
