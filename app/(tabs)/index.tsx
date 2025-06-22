@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Image, Dimensions, } from 'react-native';
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
+
+const { width } = Dimensions.get('window');
+const zaymaCardImage = require('../assets/images/credit-card-placed-cart-pay-product.png');
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');
@@ -24,44 +27,106 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ZaymaPay 🔐</Text>
+      <View style={styles.header}>
+      <Text style={styles.appName}>ZaymaPay</Text>
+      </View>
 
-      <TextInput
-        placeholder="Email"
-        keyboardType="email-address"
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-      />
+      <View style={styles.cardGraphicContainer}>
+        <Image
+          source={zaymaCardImage}
+          style={styles.cardImage}
+          resizeMode="contain"
+          />
+      </View>
+
+      <Text style={styles.headline}>Experience Seamless Transactions with ZaymaPay</Text>
+      <Text style={styles.subtext}>Your money, smarter. Faster. More secure</Text>
+      
       <TextInput
         placeholder="Password"
         secureTextEntry
+        placeholderTextColor="#BBBBBB"
         style={styles.input}
         value={password}
         onChangeText={setPassword}
       />
 
-      <Button title="Login" onPress={handleLogin} />
+<TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.loginButtonText}>Sign in</Text>
+      </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push('/Signup')} style={styles.signupLink}>
-        <Text style={styles.signupText}>Don’t have an account? Sign up</Text>
+<TouchableOpacity style={styles.signupButton} onPress={() => router.push('/Signup')}>
+    <Text style={styles.signupButtonText}>Get Started</Text>
       </TouchableOpacity>
     </View>
   );
 }
+  
+
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 28, marginBottom: 20, fontWeight: 'bold', textAlign: 'center', color: '#2c3e50' },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    backgroundColor: '#f9f9f9',
+  container: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 25, backgroundColor: '#111111',paddingBottom: 40, },
+  header: { position: 'absolute', top: 60, left: 25, },
+  appName: { fontSize: 22, color: '#F5F5F5', fontWeight: '700' },
+  cardGraphicContainer: {
+    alignItems: 'center',
+    marginBottom: 40,
+    flex: 1,
+    justifyContent: 'center',
   },
-  signupLink: { marginTop: 20, alignSelf: 'center' },
-  signupText: { color: '#3498db', fontSize: 16 },
+  cardImage: {
+    width: width * 0.9,
+    height: width * 0.9 * 0.63,
+    opacity: 0.85
+  },
+  headline: {
+    fontSize: 34, 
+    color: '#F5F5F5', 
+    fontWeight: '300', 
+    textAlign: 'center',
+    marginBottom: 10,
+    lineHeight: 40, 
+  },
+  subtext: {
+    fontSize: 16,
+    color: '#BBBBBB', 
+    textAlign: 'center',
+    marginBottom: 40, 
+  },
+  input: {
+    height: 55, 
+    backgroundColor: 'rgba(255,255,255,0.1)', 
+    borderRadius: 12, 
+    paddingHorizontal: 18,
+    marginBottom: 20,
+    color: '#FFFFFF', 
+    fontSize: 16,
+  },
+  loginButton: {
+    backgroundColor: '#3498DB', 
+    height: 58, 
+    borderRadius: 12, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15, 
+  },
+  loginButtonText: {
+    color: '#FFFFFF', 
+    fontSize: 18,
+    fontWeight: 'bold', 
+  },
+  signupButton: {
+    backgroundColor: 'transparent', 
+    height: 58,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#F5F5F5', 
+    borderWidth: 1.5, 
+  },
+  signupButtonText: {
+    color: '#F5F5F5', 
+    fontSize: 18,
+    fontWeight: '600', 
+  },
 });
