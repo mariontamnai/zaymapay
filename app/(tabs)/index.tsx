@@ -73,9 +73,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardImage: {
-    width: width * 0.9,
-    height: width * 0.9 * 0.63,
-    opacity: 0.85
+    width: width * 0.95,
+    height: width * 0.95 * 0.7,
+    opacity: 0.85,
+    transform: [{ rotate: '-10deg' }],
   },
   headline: {
     fontSize: 34, 
