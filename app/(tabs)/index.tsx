@@ -4,7 +4,7 @@ import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
-import zaymaCardImage from'../../assets/images/assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png'; 
+import zaymaCardImage from'../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png'; 
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');
