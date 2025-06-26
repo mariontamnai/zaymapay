@@ -10,7 +10,7 @@ import {
   Dimensions,
   ImageBackground 
 } from 'react-native';
-import { useZayma } from './ZaymaContext';
+import { useZayma } from './(tabs)/ZaymaContext';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
