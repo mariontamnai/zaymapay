@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Image, Dimensions, } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  StyleSheet, 
+  Alert, 
+  TouchableOpacity, 
+  Image, 
+  Dimensions,
+  ImageBackground 
+} from 'react-native';
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
-import zaymaCardImage from'../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png'; 
+import backgroundImage from '../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png'; 
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');
@@ -26,46 +36,70 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-      <Text style={styles.appName}>ZaymaPay</Text>
-      </View>
+    <ImageBackground 
+      source={backgroundImage} 
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.appName}>ZaymaPay</Text>
+          </View>
 
-      <View style={styles.cardGraphicContainer}>
-        <Image
-          source={zaymaCardImage}
-          style={styles.cardImage}
-          resizeMode="contain"
+          
+
+          <Text style={styles.headline}>Experience Seamless Transactions with ZaymaPay</Text>
+          <Text style={styles.subtext}>Your money, smarter. Faster. More secure</Text>
+          
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            placeholderTextColor="#BBBBBB"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
           />
+
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.loginButtonText}>Sign in</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.signupButton} onPress={() => router.push('/Signup')}>
+            <Text style={styles.signupButtonText}>Get Started</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <Text style={styles.headline}>Experience Seamless Transactions with ZaymaPay</Text>
-      <Text style={styles.subtext}>Your money, smarter. Faster. More secure</Text>
-      
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        placeholderTextColor="#BBBBBB"
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-      />
-
-<TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Sign in</Text>
-      </TouchableOpacity>
-
-<TouchableOpacity style={styles.signupButton} onPress={() => router.push('/Signup')}>
-    <Text style={styles.signupButtonText}>Get Started</Text>
-      </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 25, backgroundColor: '#111111',paddingBottom: 40, },
-  header: { position: 'absolute', top: 60, left: 25, },
-  appName: { fontSize: 22, color: '#F5F5F5', fontWeight: '700' },
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark overlay
+  },
+  container: { 
+    flex: 1, 
+    justifyContent: 'flex-end', 
+    paddingHorizontal: 25, 
+    paddingBottom: 40, 
+  },
+  header: { 
+    position: 'absolute', 
+    top: 60, 
+    left: 25, 
+  },
+  appName: { 
+    fontSize: 22, 
+    color: '#F5F5F5', 
+    fontWeight: '700' 
+  },
   cardGraphicContainer: {
     alignItems: 'center',
     marginBottom: 40,
