@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ImageBackground, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  ImageBackground,
+  Dimensions,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
@@ -19,7 +30,7 @@ export default function SignUpScreen() {
 
     signup(email, password);
     Alert.alert('Success', 'Account created successfully!');
-    router.replace('/'); // Go back to login screen
+    router.replace('/');
   };
 
   return (
@@ -29,49 +40,88 @@ export default function SignUpScreen() {
       resizeMode="cover"
     >
       <View style={styles.overlay}>
-      </View>
-      <View style={styles.container}>
-      <Text style={styles.title}>Create Account 🔐</Text>
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Create Account</Text>
 
-      <TextInput
-        placeholder="Email"
-        keyboardType="email-address"
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-      />
+          <TextInput
+            placeholder="Email"
+            keyboardType="email-address"
+            placeholderTextColor="#ccc"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+          />
 
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            placeholderTextColor="#ccc"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <TouchableOpacity style={styles.button} onPress={handleSignup}>
+            <Text style={styles.buttonText}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 28, marginBottom: 20, fontWeight: 'bold', textAlign: 'center', color: '#27ae60' },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
-  background: {
+  formContainer: {
     width: '100%',
-    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 25,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: '600',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 25,
+  },
+  input: {
+    height: 50,
+    borderColor: 'rgba(255,255,255,0.3)',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    color: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  button: {
+    backgroundColor: '#27ae60',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
