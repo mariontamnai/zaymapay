@@ -12,6 +12,9 @@ import {
 } from 'react-native';
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
+
+
 
 const { width } = Dimensions.get('window');
 import backgroundImage from '../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png'; 
@@ -49,8 +52,24 @@ export default function LoginScreen() {
 
           
 
-          <Text style={styles.headline}>Experience Seamless Transactions with ZaymaPay</Text>
-          <Text style={styles.subtext}>Your money, smarter. Faster. More secure</Text>
+          <Animatable.Text
+  animation="fadeInUp"
+  duration={800}
+  delay={100}
+  style={styles.headline}
+>
+  Experience Seamless Transactions with ZaymaPay
+</Animatable.Text>
+
+<Animatable.Text
+  animation="fadeInUp"
+  duration={800}
+  delay={300}
+  style={styles.subtext}
+>
+  Your money, smarter. Faster. More secure
+</Animatable.Text>
+
           
           <TextInput
             placeholder="Password"

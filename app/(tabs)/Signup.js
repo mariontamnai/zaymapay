@@ -14,6 +14,7 @@ import {
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 
+
 const { width, height } = Dimensions.get('window');
 
 export default function SignUpScreen() {
