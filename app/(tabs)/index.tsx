@@ -13,6 +13,8 @@ import {
 import { useZayma } from './ZaymaContext';
 import { useRouter } from 'expo-router';
 import * as Animatable from 'react-native-animatable';
+import { useRef, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -23,6 +25,20 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const { login } = useZayma();
   const router = useRouter();
+
+  const headlineRef = useRef<Animatable.Text>(null);
+  const subtextRef = useRef<Animatable.Text>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (headlineRef.current?.fadeInUp) {
+        headlineRef.current.fadeInUp(800);
+      }
+      if (subtextRef.current?.fadeInUp) {
+        subtextRef.current.fadeInUp(800);
+      }
+    }, [])
+  );
 
   const handleLogin = () => {
     if (!password) {
@@ -53,18 +69,14 @@ export default function LoginScreen() {
           
 
           <Animatable.Text
-  animation="fadeInUp"
-  duration={800}
-  delay={100}
+  ref={headlineRef}
   style={styles.headline}
 >
   Experience Seamless Transactions with ZaymaPay
 </Animatable.Text>
 
 <Animatable.Text
-  animation="fadeInUp"
-  duration={800}
-  delay={300}
+  ref={subtextRef}
   style={styles.subtext}
 >
   Your money, smarter. Faster. More secure
