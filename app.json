@@ -7,12 +7,16 @@
     "icon": "./assets/images/photorealistic-money-concept.jpg",
     "scheme": "zaymapay",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/photorealistic-money-concept.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "photorealistic-money-concept": {
+      "adaptiveIcon": {
         "foregroundImage": "./assets/images/photorealistic-money-concept.jpg",
         "backgroundColor": "#ffffff"
       },
@@ -29,7 +33,6 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/photorealistic-money-concept.jpg",
-          "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
