@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useZayma } from './ZaymaContext';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const FILTERS = ['All', 'Sent', 'Withdraw'];
 
@@ -21,18 +22,19 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.welcome}>Hey bestiee 👋</Text>
 
-      <View style={styles.balanceCard}>
-        <Text style={styles.balanceLabel}>Your Balance</Text>
+      <LinearGradient colors={['#27ae60', '#2ecc71']} style={styles.balanceCard}>
+        <Text style={styles.balanceLabel}>Available Balance</Text>
         <Text style={styles.balanceAmount}>Ksh {balance.toFixed(2)}</Text>
-      </View>
+      </LinearGradient>
 
       <View style={styles.actions}>
         <TouchableOpacity style={styles.actionButton} onPress={handleSendMoney}>
-          <Text style={styles.actionText}>Send</Text>
+          <Text style={styles.actionText}>💸 Send</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton} onPress={handleWithdraw}>
-          <Text style={styles.actionText}>Withdraw</Text>
+          <Text style={styles.actionText}>🏧 Withdraw</Text>
         </TouchableOpacity>
       </View>
 
@@ -63,29 +65,60 @@ export default function HomeScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.transactionItem}>
-            <Text style={styles.transactionTitle}>{item.title}</Text>
-            <Text style={[styles.transactionAmount, { color: item.amount < 0 ? '#e74c3c' : '#2ecc71' }]}>
+            <Text style={styles.transactionTitle}>
+              {item.title.includes('Sent')
+                ? '📤 '
+                : item.title.includes('Withdraw')
+                ? '🏧 '
+                : '💰 '}
+              {item.title}
+            </Text>
+            <Text style={[
+              styles.transactionAmount,
+              { color: item.amount < 0 ? '#e74c3c' : '#2ecc71' }
+            ]}>
               {item.amount < 0 ? '-' : '+'} Ksh {Math.abs(item.amount)}
             </Text>
           </View>
         )}
-        ListEmptyComponent={<Text style={styles.noData}>No transactions yet</Text>}
+        ListEmptyComponent={<Text style={styles.noData}>No transactions yet 🫠</Text>}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'black', padding: 20 },
-  welcome: { fontSize: 20, marginBottom: 10, fontWeight: '500' },
-  balanceCard: {
-    backgroundColor: '#27ae60',
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
     padding: 20,
-    borderRadius: 12,
-    marginBottom: 20,
   },
-  balanceLabel: { color: '#ecf0f1', fontSize: 16 },
-  balanceAmount: { color: '#fff', fontSize: 28, fontWeight: 'bold', marginTop: 5 },
+  welcome: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 10,
+  },
+  balanceCard: {
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 20,
+    shadowColor: '#2ecc71',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  balanceLabel: {
+    color: '#ecf0f1',
+    fontSize: 16,
+  },
+  balanceAmount: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -96,9 +129,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#2980b9',
     padding: 15,
     marginHorizontal: 5,
-    borderRadius: 10,
+    borderRadius: 15,
   },
-  actionText: { color: '#fff', textAlign: 'center', fontWeight: '600' },
+  actionText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '600',
+    fontSize: 16,
+  },
   filterRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -113,20 +151,33 @@ const styles = StyleSheet.create({
   filterActive: {
     backgroundColor: '#27ae60',
   },
-  filterText: { color: '#2c3e50' },
-  filterTextActive: { color: '#fff', fontWeight: 'bold' },
+  filterText: {
+    color: '#2c3e50',
+    fontWeight: '500',
+  },
+  filterTextActive: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
   transactionItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderBottomWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#444',
   },
-  transactionTitle: { fontSize: 16, color: '#2c3e50' },
-  transactionAmount: { fontSize: 16, fontWeight: 'bold' },
+  transactionTitle: {
+    fontSize: 16,
+    color: '#ecf0f1',
+  },
+  transactionAmount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   noData: {
     color: '#7f8c8d',
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 30,
+    fontSize: 16,
   },
 });
