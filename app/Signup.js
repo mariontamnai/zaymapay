@@ -1,18 +1,16 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
+  Alert,
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
   Text,
   TextInput,
-  Button,
-  StyleSheet,
-  Alert,
-  ImageBackground,
-  Dimensions,
   TouchableOpacity,
-  Platform,
+  View
 } from 'react-native';
 import { useZayma } from './ZaymaContext';
-import { useRouter } from 'expo-router';
 
 
 const { width, height } = Dimensions.get('window');

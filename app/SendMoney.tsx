@@ -1,49 +1,50 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useZayma } from './ZaymaContext';
 
 
-export default function Withdraw() {
-  const [account, setAccount] = useState('');
+export default function SendMoney() {
+  const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
-  const { withdrawMoney } = useZayma();
+  const { sendMoney } = useZayma();
 
   const router = useRouter();
 
-  const handleWithdraw = () => {
+  const handleSend = () => {
     const amountNum = parseFloat(amount);
 
-    withdrawMoney(amountNum);
-    if (!account || !amount || isNaN(amountNum) || amountNum <= 0) {
-      Alert.alert('Error', 'Please enter a valid account number and amount.');
+    sendMoney(amountNum, phone);
+    if (!phone || !amount || isNaN(amountNum) || amountNum <= 0) {
+      Alert.alert('Error', 'Enter a valid phone number and amount.');
       return;
     }
 
-    Alert.alert('Success', `Withdrew Ksh ${amountNum} to ${account}`);
-    router.back(); // Go back to home
+    Alert.alert('Success', `Sent Ksh ${amountNum} to ${phone}`);
+    router.back(); // Go back to Home after sending
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Withdraw Money 🏦</Text>
+      <Text style={styles.title}>Send Money 💸</Text>
 
       <TextInput
-        placeholder="Bank/Agent Account No."
-        value={account}
-        onChangeText={setAccount}
+        placeholder="Phone number (e.g. 0712345678)"
+        keyboardType="phone-pad"
+        value={phone}
+        onChangeText={setPhone}
         style={styles.input}
       />
 
       <TextInput
-        placeholder="Amount (e.g. 300)"
+        placeholder="Amount (e.g. 500)"
         keyboardType="numeric"
         value={amount}
         onChangeText={setAmount}
         style={styles.input}
       />
 
-      <Button title="Withdraw" onPress={handleWithdraw} color="#e67e22" />
+      <Button title="Send" onPress={handleSend} color="#27ae60" />
 
       <View style={{ marginTop: 20 }}>
         <Button title="Cancel" onPress={() => router.back()} color="#7f8c8d" />

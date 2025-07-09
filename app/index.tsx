@@ -1,25 +1,23 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  StyleSheet, 
-  Alert, 
-  TouchableOpacity, 
-  Image, 
-  Dimensions,
-  ImageBackground 
-} from 'react-native';
-import { useZayma } from './ZaymaContext';
-import { useRouter } from 'expo-router';
-import * as Animatable from 'react-native-animatable';
-import { useRef, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
+import React, { useCallback, useRef, useState } from 'react';
+import {
+  Alert,
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import backgroundImage from '../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png';
+import { useZayma } from './ZaymaContext';
 
 
 
 const { width } = Dimensions.get('window');
-import backgroundImage from '../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png'; 
 
 export default function LoginScreen() {
   const [password, setPassword] = useState('');
@@ -48,7 +46,7 @@ export default function LoginScreen() {
 
     const success = login(password);
     if (success) {
-      router.replace('/(tabs)/HomeScreen');
+      router.replace('/HomeScreen');
     } else {
       Alert.alert('Login Failed', 'Wrong password');
     }
