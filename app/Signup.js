@@ -34,7 +34,7 @@ export default function SignUpScreen() {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/young-woman-doing-shopping-online.jpg')}
+      source={require('../../assets/images/original-6b8cb25da991545e499e43983cdb3bd5.webp')}
       style={styles.background}
       resizeMode="cover"
     >
