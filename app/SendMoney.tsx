@@ -48,7 +48,7 @@ export default function SendMoney() {
       <Button title="Send" onPress={handleSend} color="#27ae60" />
 
       <View style={{ marginTop: 20 }}>
-        <Button title="Cancel" onPress={() => router.back()} color="#7f8c8d" />
+        <Button title="Cancel" onPress={() => router.replace('/')} color="#7f8c8d" />
       </View>
     </View>
   );
