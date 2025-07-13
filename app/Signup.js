@@ -38,8 +38,9 @@ export default function SignUpScreen() {
       //resizeMode="cover"
    // >
       <View style={styles.overlay}>
-        <View style={styles.formContainer}>
+        <View style={styles.Container}>
           <BackButton />
+
           <Text style={styles.title}>Create Account</Text>
 
           <TextInput

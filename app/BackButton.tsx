@@ -1,26 +1,37 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function BackButton() {
   const router = useRouter();
 
   return (
-    <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-      <Text style={styles.backText}>← Back</Text>
-    </TouchableOpacity>
+    <View style={styles.container}>
+        <TouchableOpacity
+        onPress={() => router.back()}
+        style={styles.button}
+        activeOpacity={0.7}
+        >
+            <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+    </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
-  backBtn: {
-    marginTop: 40,
-    marginLeft: 20,
-    marginBottom: 10,
-  },
-  backText: {
-    fontSize: 16,
-    color: '#3498db',
-    fontWeight: '600',
-  },
-});
+    container: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        zIndex: 10,
+      },
+      button: {
+        padding: 10,
+        borderRadius: 50,
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        borderWidth: 1,
+        borderColor: '#888',
+      },
+    });
