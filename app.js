@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import Navigation from './app/Navigation';
 
+// Removed duplicate export default statement
+function AppNavigation() {
+  return <Navigation />;
+}
 export default function App() {
   const [pin, setPin] = useState('');
+  const AppNavigation = () => <Navigation />;
 
   const handleLogin = () => {
     if (pin === '1234') {
