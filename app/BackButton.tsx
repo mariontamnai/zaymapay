@@ -29,17 +29,10 @@ const styles = StyleSheet.create({
       },
       button: {
         position: 'absolute',
-        top: 50,
-        left: 20,
+        top: 1,
+        left: 0,
         zIndex: 100,
         padding: 8,
-        borderRadius: 30,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderWidth: 1,
-        borderColor: '#ffffff30',
-        shadowColor: '#000',
-        shadowOpacity: 0.2,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
+        
       },
     });
