@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useZayma } from './ZaymaContext';
+import BackButton from './BackButton';
 
 const FILTERS = ['All', 'Sent', 'Withdraw'];
 
@@ -22,6 +23,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.welcome}>Hey👋</Text>
 
       <LinearGradient colors={['#27ae60', '#2ecc71']} style={styles.balanceCard}>

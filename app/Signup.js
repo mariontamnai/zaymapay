@@ -10,6 +10,7 @@ import {
   View
 } from 'react-native';
 import { useZayma } from './ZaymaContext';
+import BackButton from './BackButton';
 
 
 
@@ -38,6 +39,7 @@ export default function SignUpScreen() {
    // >
       <View style={styles.overlay}>
         <View style={styles.formContainer}>
+          <BackButton />
           <Text style={styles.title}>Create Account</Text>
 
           <TextInput

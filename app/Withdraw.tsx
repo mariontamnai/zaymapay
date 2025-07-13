@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useZayma } from './ZaymaContext';
+import BackButton from './BackButton';
 
 
 export default function Withdraw() {
@@ -27,6 +28,7 @@ export default function Withdraw() {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>Withdraw Money 🏦</Text>
 
       <TextInput
