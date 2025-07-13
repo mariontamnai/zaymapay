@@ -21,7 +21,7 @@ export default function SendMoney() {
     }
 
     Alert.alert('Success', `Sent Ksh ${amountNum} to ${phone}`);
-    router.back(); // Go back to Home after sending
+    router.back(); 
   };
 
   return (

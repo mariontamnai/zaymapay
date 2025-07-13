@@ -11,8 +11,8 @@ export default function HomeScreen() {
   const { balance, transactions } = useZayma();
   const [selectedFilter, setSelectedFilter] = useState('All');
 
-  const handleSendMoney = () => router.push('/(tabs)/SendMoney');
-  const handleWithdraw = () => router.push('/(tabs)/Withdraw');
+  const handleSendMoney = () => router.push('../../SendMoney');
+  const handleWithdraw = () => router.push('../../Withdraw');
 
   const filteredTransactions = transactions.filter((tx) => {
     if (selectedFilter === 'All') return true;
