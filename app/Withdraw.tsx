@@ -14,12 +14,13 @@ export default function Withdraw() {
   const handleWithdraw = () => {
     const amountNum = parseFloat(amount);
 
-    withdrawMoney(amountNum);
+    
     if (!account || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Please enter a valid account number and amount.');
       return;
     }
 
+    withdrawMoney(amountNum);
     Alert.alert('Success', `Withdrew Ksh ${amountNum} to ${account}`);
     router.back(); // Go back to home
   };

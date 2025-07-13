@@ -14,12 +14,13 @@ export default function SendMoney() {
   const handleSend = () => {
     const amountNum = parseFloat(amount);
 
-    sendMoney(amountNum, phone);
+    
     if (!phone || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Enter a valid phone number and amount.');
       return;
     }
-
+    
+    sendMoney(amountNum, phone);
     Alert.alert('Success', `Sent Ksh ${amountNum} to ${phone}`);
     router.back(); 
   };
