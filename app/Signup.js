@@ -13,7 +13,6 @@ import {
 import { useZayma } from './ZaymaContext';
 
 
-const { width, height } = Dimensions.get('window');
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState('');
@@ -33,11 +32,11 @@ export default function SignUpScreen() {
   };
 
   return (
-    <ImageBackground
-      source={require('../../assets/images/original-6b8cb25da991545e499e43983cdb3bd5.webp')}
-      style={styles.background}
-      resizeMode="cover"
-    >
+    //<ImageBackground
+     // source={require('../../assets/images/original-6b8cb25da991545e499e43983cdb3bd5.webp')}
+     // style={styles.background}
+      //resizeMode="cover"
+   // >
       <View style={styles.overlay}>
         <View style={styles.formContainer}>
           <Text style={styles.title}>Create Account</Text>
@@ -65,7 +64,7 @@ export default function SignUpScreen() {
           </TouchableOpacity>
         </View>
       </View>
-    </ImageBackground>
+    //</ImageBackground>
   );
 }
 

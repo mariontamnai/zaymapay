@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import backgroundImage from '../../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png';
+import backgroundImage from '../assets/images/freepik__the-style-is-candid-image-photography-with-natural__82401.png';
 import { useZayma } from './ZaymaContext';
 
 
