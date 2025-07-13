@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import {
   Alert,
   Dimensions,
-  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
