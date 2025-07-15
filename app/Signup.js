@@ -38,7 +38,7 @@ export default function SignUpScreen() {
       //resizeMode="cover"
    // >
       <View style={styles.overlay}>
-        <View style={styles.Container}>
+        <View style={styles.formContainer}>
           <BackButton />
 
           <Text style={styles.title}>Create Account</Text>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#000',
   },
   formContainer: {
     width: '100%',
