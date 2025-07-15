@@ -1,8 +1,9 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert,  StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { useZayma } from './ZaymaContext';
-import BackButton from './BackButton';
+import { Ionicons} from '@expo/vector-icons';
+
 
 
 export default function Withdraw() {
@@ -28,28 +29,41 @@ export default function Withdraw() {
 
   return (
     <View style={styles.container}>
-      <BackButton />
-      <Text style={styles.title}>Withdraw Money 🏦</Text>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Withdraw</Text>
+      </View>
 
-      <TextInput
-        placeholder="Bank/Agent Account No."
-        value={account}
-        onChangeText={setAccount}
-        style={styles.input}
-      />
+      {/* Card Container */}
+      <View style={styles.card}>
+        <Text style={styles.label}>Bank / Agent Account No.</Text>
+        <TextInput
+          placeholder="Enter account number"
+          placeholderTextColor="#aaa"
+          value={account}
+          onChangeText={setAccount}
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Amount (e.g. 300)"
-        keyboardType="numeric"
-        value={amount}
-        onChangeText={setAmount}
-        style={styles.input}
-      />
+        <Text style={styles.label}>Amount</Text>
+        <TextInput
+          placeholder="e.g. 300"
+          placeholderTextColor="#aaa"
+          keyboardType="numeric"
+          value={amount}
+          onChangeText={setAmount}
+          style={styles.input}
+        />
 
-      <Button title="Withdraw" onPress={handleWithdraw} color="#e67e22" />
+        <TouchableOpacity style={styles.withdrawBtn} onPress={handleWithdraw}>
+          <Text style={styles.withdrawText}>Withdraw</Text>
+        </TouchableOpacity>
 
-      <View style={{ marginTop: 20 }}>
-        <Button title="Cancel" onPress={() => router.back()} color="#7f8c8d" />
+        <TouchableOpacity style={styles.cancelBtn} onPress={() => router.back()}>
+          <Text style={styles.cancelText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -58,22 +72,60 @@ export default function Withdraw() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
-    backgroundColor: '#ecf0f1',
-    justifyContent: 'center',
+    backgroundColor: '#000', // or '#f5f5f5' for light mode
+    paddingTop: 50,
+    paddingHorizontal: 20,
   },
-  title: {
-    fontSize: 24,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: '#27ae60',
+    padding: 15,
+    borderRadius: 10,
+  },
+  headerTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center',
+    color: '#fff',
+  },
+  card: {
+    backgroundColor: '#1c1c1e',
+    padding: 20,
+    borderRadius: 15,
+    marginTop: 30,
+  },
+  label: {
+    color: '#bbb',
+    marginBottom: 5,
+    fontSize: 14,
   },
   input: {
-    backgroundColor: '#fff',
-    marginBottom: 20,
+    backgroundColor: '#2c2c2e',
+    color: '#fff',
     padding: 15,
-    borderRadius: 8,
-    borderColor: '#ccc',
+    borderRadius: 10,
+    marginBottom: 20,
     borderWidth: 1,
+    borderColor: '#444',
+  },
+  withdrawBtn: {
+    backgroundColor: '#27ae60',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  withdrawText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  cancelBtn: {
+    marginTop: 15,
+    alignItems: 'center',
+  },
+  cancelText: {
+    color: '#aaa',
+    fontSize: 14,
   },
 });

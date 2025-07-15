@@ -29,7 +29,7 @@ export default function SendMoney() {
   return (
     <View style={styles.container}>
       <BackButton />
-      <Text style={styles.title}>Send Money 💸</Text>
+      <Text style={styles.title}>Send 💸</Text>
 
       <TextInput
         placeholder="Phone number (e.g. 0712345678)"
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#000',
     justifyContent: 'center',
   },
   title: {
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 30,
     textAlign: 'center',
+    color: 'grey',
   },
   input: {
     backgroundColor: '#fff',
