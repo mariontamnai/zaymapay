@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { useZayma } from './ZaymaContext';
 import BackButton from './BackButton';
 
@@ -45,13 +45,16 @@ export default function SendMoney() {
         value={amount}
         onChangeText={setAmount}
         style={styles.input}
+        placeholderTextColor="#777"
       />
 
-      <Button title="Send" onPress={handleSend} color="#27ae60" />
+<TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+        <Text style={styles.sendButtonText}>Send</Text>
+      </TouchableOpacity>
 
-      <View style={{ marginTop: 20 }}>
-        <Button title="Cancel" onPress={() => router.back()} color="#7f8c8d" />
-      </View>
+      <TouchableOpacity style={styles.cancelButton} onPress={() => router.back()}>
+        <Text style={styles.cancelButtonText}>Cancel</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -64,18 +67,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: 40,
     textAlign: 'center',
-    color: 'grey',
+    color: '#43b02a',
   },
   input: {
     backgroundColor: '#fff',
     marginBottom: 20,
     padding: 15,
-    borderRadius: 8,
-    borderColor: '#ccc',
+    borderRadius: 10,
+    borderColor: '#43b02a',
     borderWidth: 1,
+    fontSize: 16,
   },
+sendButton: {
+  backgroundColor: '#43b02a',
+  padding: 15,
+  borderRadius: 10,
+  alignItems: 'center',
+ },
+sendButtonText: {
+  color: '#fff',
+  fontWeight: '500',
+  fontSize: 15,
+},
+cancelButton: {
+  marginTop: 15,
+  backgroundColor: '#bbb',
+  padding: 15,
+  borderRadius: 10,
+  alignItems: 'center',
+},
+cancelButtonText: {
+  color: '#fff',
+  fontWeight: '500',
+  fontSize: 15,
+},
 });
