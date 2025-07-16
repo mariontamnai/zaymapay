@@ -132,14 +132,16 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
     marginBottom: 20,
   },
   actionButton: {
-    flex: 1,
-    backgroundColor: '#2980b9',
-    padding: 15,
-    marginHorizontal: 5,
-    borderRadius: 15,
+  backgroundColor: '#2980b9',
+  padding: 15,
+  margin: 5,
+  borderRadius: 15,
+  flexBasis: '30%',
+  alignItems: 'center',
   },
   actionText: {
     color: '#fff',
