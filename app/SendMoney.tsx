@@ -62,9 +62,10 @@ export default function SendMoney() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
+    padding: 50,
+    paddingTop: 50,
     backgroundColor: '#000',
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   title: {
     fontSize: 28,
