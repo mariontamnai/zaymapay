@@ -17,6 +17,7 @@ type AuthContextType = {
   sendMoney: (amount: number, to: string) => void;
   withdrawMoney: (amount: number) => void;
   depositMoney: (amount: number) => void;
+  buyAirtime: (amount: number, phone: string) => void;
 };
 
 const ZaymaContext = createContext<AuthContextType | undefined>(undefined);
@@ -67,10 +68,21 @@ export const ZaymaProvider = ({ children }: { children: ReactNode }) => {
       ...prev,
     ]);
   };
+
+  const buyAirtime = (amount: number, phone: string): void => {
+    const newTransaction: Transaction = {
+      id: Date.now().toString(),
+      title: `Airtime bought for ${phone}`,
+      amount: -amount,
+    };
+    setTransactions((prev: Transaction[]) => [...prev, newTransaction]);
+    setBalance((prev: number) => prev - amount);
+  };
+  
   
 
   return (
-    <ZaymaContext.Provider value={{ user, signup, login, logout, balance, transactions, sendMoney, withdrawMoney, depositMoney,}}>
+    <ZaymaContext.Provider value={{ user, signup, login, logout, balance, transactions, sendMoney, withdrawMoney, depositMoney, buyAirtime }}>
       {children}
     </ZaymaContext.Provider>
   );
