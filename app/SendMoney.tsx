@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Alert,  StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { useZayma } from './ZaymaContext';
 import BackButton from './BackButton';
 
@@ -37,6 +37,7 @@ export default function SendMoney() {
         value={phone}
         onChangeText={setPhone}
         style={styles.input}
+        placeholderTextColor="aaa"
       />
 
       <TextInput
@@ -45,7 +46,7 @@ export default function SendMoney() {
         value={amount}
         onChangeText={setAmount}
         style={styles.input}
-        placeholderTextColor="#777"
+        placeholderTextColor="#aaa"
       />
 
 <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
@@ -62,24 +63,31 @@ export default function SendMoney() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 50,
+    paddingHorizontal: 20,
     paddingTop: 50,
     backgroundColor: '#000',
     //justifyContent: 'center',
+  },
+  card: {
+    backgroundColor: '#1c1c1e',
+    padding: 20,
+    borderRadius: 15,
+    marginTop: 30,
   },
   title: {
     fontSize: 28,
     fontWeight: '700',
     marginBottom: 40,
     textAlign: 'center',
-    color: '#43b02a',
+    color: '#bbb',
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2c2c2e',
+    color: '#fff',
     marginBottom: 20,
     padding: 15,
     borderRadius: 10,
-    borderColor: '#43b02a',
+    borderColor: '#444',
     borderWidth: 1,
     fontSize: 16,
   },
