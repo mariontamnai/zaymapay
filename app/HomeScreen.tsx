@@ -15,6 +15,7 @@ export default function HomeScreen() {
   const handleSendMoney = () => router.push('../../SendMoney');
   const handleWithdraw = () => router.push('../../Withdraw');
   const handleDeposit = () => router.push('../../Deposit');
+  const handleBuyAirtime = () => router.push('../../BuyAirtime');
 
   const filteredTransactions = transactions.filter((tx) => {
     if (selectedFilter === 'All') return true;
@@ -41,6 +42,9 @@ export default function HomeScreen() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton} onPress={handleDeposit}>
           <Text style={styles.actionText}>🏦 Deposit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={handleBuyAirtime}>
+          <Text style={styles.actionText}>📱 Buy Airtime</Text>
         </TouchableOpacity>
       </View>
 
