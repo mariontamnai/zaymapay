@@ -16,6 +16,7 @@ type AuthContextType = {
   transactions: Transaction[];
   sendMoney: (amount: number, to: string) => void;
   withdrawMoney: (amount: number) => void;
+  depositMoney: (amount: number) => void;
 };
 
 const ZaymaContext = createContext<AuthContextType | undefined>(undefined);
@@ -59,8 +60,17 @@ export const ZaymaProvider = ({ children }: { children: ReactNode }) => {
     ]);
   };
 
+  const depositMoney = (amount: number) => {
+    setBalance(prev => prev + amount);
+    setTransactions(prev => [
+      { id: Date.now().toString(), title: 'Deposit', amount },
+      ...prev,
+    ]);
+  };
+  
+
   return (
-    <ZaymaContext.Provider value={{ user, signup, login, logout, balance, transactions, sendMoney, withdrawMoney }}>
+    <ZaymaContext.Provider value={{ user, signup, login, logout, balance, transactions, sendMoney, withdrawMoney, depositMoney,}}>
       {children}
     </ZaymaContext.Provider>
   );
