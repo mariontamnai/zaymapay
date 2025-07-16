@@ -29,14 +29,12 @@ export default function Withdraw() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Withdraw</Text>
-      </View>
+      
 
-      {/* Card Container */}
+      
       <View style={styles.card}>
         <Text style={styles.label}>Bank / Agent Account No.</Text>
         <TextInput
@@ -72,22 +70,9 @@ export default function Withdraw() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000', // or '#f5f5f5' for light mode
+    backgroundColor: '#000', 
     paddingTop: 50,
     paddingHorizontal: 20,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: '#27ae60',
-    padding: 15,
-    borderRadius: 10,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
   },
   card: {
     backgroundColor: '#1c1c1e',

@@ -29,7 +29,7 @@ export default function SendMoney() {
   return (
     <View style={styles.container}>
       <BackButton />
-      <Text style={styles.title}>Send 💸</Text>
+      <Text style={styles.title}>Send </Text>
 
       <TextInput
         placeholder="Phone number (e.g. 0712345678)"
