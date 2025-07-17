@@ -9,7 +9,7 @@ export default function BuyAirtime() {
   const [amount, setAmount] = useState('');
   const { buyAirtime } = useZayma(); 
   const router = useRouter();
-  const [showPin, setShowPin] =useState(false);
+  const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
 
@@ -27,27 +27,8 @@ export default function BuyAirtime() {
       return;
     }
 
+    // ✅ Just show PIN overlay
     setShowPin(true);
-
-    Alert.alert(
-      'Confirm Purchase',
-      `Buy Ksh ${amountNum} airtime for ${phone}?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Confirm',
-          onPress: () => {
-            buyAirtime(amountNum, phone);
-            Alert.alert('Success', `Bought Ksh ${amountNum} airtime for ${phone}`);
-            router.back();
-          },
-        },
-      ],
-      { cancelable: false }
-    );
   };
 
   const handleConfirmPin = () => {
@@ -57,77 +38,80 @@ export default function BuyAirtime() {
       setShowPin(false);
       setPin('');
       setError('');
-      Alert.alert('Sccess', `Bought Ksh ${amountNum} airtime for ${phone}`);
+      Alert.alert('Success', `Bought Ksh ${amountNum} airtime for ${phone}`);
       router.back();
     } else {
-      setError('Incorrect PIN. Please Try Again.');
+      setError('Incorrect PIN. Please try again.');
     }
   };
 
   return (
     <>
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.label}>Phone Number</Text>
-        <TextInput
-          placeholder="e.g. 0712345678"
-          placeholderTextColor="#aaa"
-          keyboardType="phone-pad"
-          value={phone}
-          onChangeText={setPhone}
-          style={styles.input}
-        />
-
-        <Text style={styles.label}>Amount</Text>
-        <TextInput
-          placeholder="e.g. 100"
-          placeholderTextColor="#aaa"
-          keyboardType="numeric"
-          value={amount}
-          onChangeText={setAmount}
-          style={styles.input}
-        />
-
-        <TouchableOpacity style={styles.buyBtn} onPress={handleBuy}>
-          <Text style={styles.buyText}>Buy Airtime</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.cancelBtn} onPress={() => router.back()}>
-          <Text style={styles.cancelText}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-    {showPin && (
-      <View style={styles.pinOverlay}>
-        <View style={styles.pinBox}>
-          <Text style={styles.label}>Enter PIN to Confirm</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="****"
-            placeholderTextColor="#aaa"
-            secureTextEntry
-            keyboardType="numeric"
-            value={pin}
-            onChangeText={setPin}
-            maxLength={4}
-          />
-          {error ? <Text style={styles.errorText}>{error}</Text> : null}
-          <TouchableOpacity style={styles.buyBtn} onPress={handleConfirmPin}>
-            <Text style={styles.buyText}>Confirm</Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cancelBtn} onPress={() => setShowPin(false)}>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput
+            placeholder="e.g. 0712345678"
+            placeholderTextColor="#aaa"
+            keyboardType="phone-pad"
+            value={phone}
+            onChangeText={setPhone}
+            style={styles.input}
+          />
+
+          <Text style={styles.label}>Amount</Text>
+          <TextInput
+            placeholder="e.g. 100"
+            placeholderTextColor="#aaa"
+            keyboardType="numeric"
+            value={amount}
+            onChangeText={setAmount}
+            style={styles.input}
+          />
+
+          <TouchableOpacity style={styles.buyBtn} onPress={handleBuy}>
+            <Text style={styles.buyText}>Buy Airtime</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.cancelBtn} onPress={() => router.back()}>
             <Text style={styles.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>
-    )}
-  </>
+
+      {showPin && (
+        <View style={styles.pinOverlay}>
+          <View style={styles.pinBox}>
+            <Text style={styles.label}>Enter PIN to Confirm</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="****"
+              placeholderTextColor="#aaa"
+              secureTextEntry
+              keyboardType="numeric"
+              value={pin}
+              onChangeText={setPin}
+              maxLength={4}
+            />
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+            <TouchableOpacity style={styles.buyBtn} onPress={handleConfirmPin}>
+              <Text style={styles.buyText}>Confirm</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.cancelBtn} onPress={() => setShowPin(false)}>
+              <Text style={styles.cancelText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
@@ -203,6 +187,5 @@ const styles = StyleSheet.create({
     color: '#e74c3c',
     textAlign: 'center',
     marginBottom: 10,
-  }
-  
+  },
 });
