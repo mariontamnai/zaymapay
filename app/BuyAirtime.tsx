@@ -12,15 +12,37 @@ export default function BuyAirtime() {
 
   const handleBuy = () => {
     const amountNum = parseFloat(amount);
+    const phonePattern = /^(07|01)\d{8}$/;
 
     if (!phone || !amount || isNaN(amountNum) || amountNum <= 0) {
       Alert.alert('Error', 'Please enter a valid phone number and amount.');
       return;
     }
 
-    buyAirtime(amountNum, phone);
-    Alert.alert('Success', `Bought Ksh ${amountNum} airtime for ${phone}`);
-    router.back();
+    if (!phonePattern.test(phone)) {
+      Alert.alert('Error', 'Please enter a valid phone number starting with 07 or 01.');
+      return;
+    }
+
+    Alert.alert(
+      'Confirm Purchase',
+      `Buy Ksh ${amountNum} airtime for ${phone}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => {
+            buyAirtime(amountNum, phone);
+            Alert.alert('Success', `Bought Ksh ${amountNum} airtime for ${phone}`);
+            router.back();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
