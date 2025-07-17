@@ -28,7 +28,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <BackButton />
-      <Text style={styles.welcome}>Welcome Back 👋</Text>
+      <Text style={styles.welcome}>Hey 👋</Text>
 
       <LinearGradient colors={['#27ae60', '#2ecc71']} style={styles.balanceCard}>
         <Text style={styles.balanceLabel}>Available Balance</Text>
