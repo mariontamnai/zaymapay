@@ -1,9 +1,16 @@
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, GestureResponderEvent } from 'react-native';
 import { useZayma } from './ZaymaContext';
 import BackButton from './BackButton';
+
+type ActionIconProps = {
+  label: string;
+  icon: string;
+  onPress: (event: GestureResponderEvent) => void;
+}
 
 const FILTERS = ['All', 'Sent', 'Withdraw'];
 
@@ -11,11 +18,6 @@ export default function HomeScreen() {
   const router = useRouter();
   const { balance, transactions } = useZayma();
   const [selectedFilter, setSelectedFilter] = useState('All');
-
-  const handleSendMoney = () => router.push('../../SendMoney');
-  const handleWithdraw = () => router.push('../../Withdraw');
-  const handleDeposit = () => router.push('../../Deposit');
-  const handleBuyAirtime = () => router.push('../../BuyAirtime');
 
   const filteredTransactions = transactions.filter((tx) => {
     if (selectedFilter === 'All') return true;
@@ -26,76 +28,79 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <BackButton />
-      <Text style={styles.welcome}>Hey👋</Text>
+      <Text style={styles.welcome}>Welcome Back 👋</Text>
 
       <LinearGradient colors={['#27ae60', '#2ecc71']} style={styles.balanceCard}>
         <Text style={styles.balanceLabel}>Available Balance</Text>
         <Text style={styles.balanceAmount}>Ksh {balance.toFixed(2)}</Text>
       </LinearGradient>
 
+      {/* Action Buttons */}
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton} onPress={handleSendMoney}>
-          <Text style={styles.actionText}>💸 Send</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={handleWithdraw}>
-          <Text style={styles.actionText}>🏧 Withdraw</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={handleDeposit}>
-          <Text style={styles.actionText}>🏦 Deposit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={handleBuyAirtime}>
-          <Text style={styles.actionText}>📱 Buy Airtime</Text>
-        </TouchableOpacity>
+        <ActionIcon label="Send" icon="send-outline" onPress={() => router.push('../../SendMoney')} />
+        <ActionIcon label="Withdraw" icon="cash-outline" onPress={() => router.push('../../Withdraw')} />
+        <ActionIcon label="Deposit" icon="wallet-outline" onPress={() => router.push('../../Deposit')} />
+        <ActionIcon label="Airtime" icon="phone-portrait-outline" onPress={() => router.push('../../BuyAirtime')} />
       </View>
 
+      {/* Filters */}
       <View style={styles.filterRow}>
         {FILTERS.map((filter) => (
           <TouchableOpacity
             key={filter}
             onPress={() => setSelectedFilter(filter)}
-            style={[
-              styles.filterButton,
-              selectedFilter === filter && styles.filterActive,
-            ]}
-          >
-            <Text
-              style={[
-                styles.filterText,
-                selectedFilter === filter && styles.filterTextActive,
-              ]}
-            >
+            style={[styles.filterButton, selectedFilter === filter && styles.filterActive]}>
+            <Text style={[styles.filterText, selectedFilter === filter && styles.filterTextActive]}>
               {filter}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
 
+      {/* Transactions */}
       <FlatList
         data={filteredTransactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.transactionItem}>
-            <Text style={styles.transactionTitle}>
-              {item.title.includes('Sent')
-                ? '📤 '
-                : item.title.includes('Withdraw')
-                ? '🏧 '
-                : '💰 '}
-              {item.title}
-            </Text>
-            <Text style={[
-              styles.transactionAmount,
-              { color: item.amount < 0 ? '#e74c3c' : '#2ecc71' }
-            ]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Ionicons
+                name={
+                  item.title.includes('Sent')
+                    ? 'arrow-up-circle-outline'
+                    : item.title.includes('Withdraw')
+                    ? 'cash-outline'
+                    : 'add-circle-outline'
+                }
+                size={22}
+                color={item.amount < 0 ? '#e74c3c' : '#2ecc71'}
+                style={{ marginRight: 8 }}
+              />
+              <Text style={styles.transactionTitle}>{item.title}</Text>
+            </View>
+            <Text
+              style={[
+                styles.transactionAmount,
+                { color: item.amount < 0 ? '#e74c3c' : '#2ecc71' },
+              ]}
+            >
               {item.amount < 0 ? '-' : '+'} Ksh {Math.abs(item.amount)}
             </Text>
           </View>
         )}
-        ListEmptyComponent={<Text style={styles.noData}>No transactions yet 🫠</Text>}
+        ListEmptyComponent={<Text style={styles.noData}>No transactions yet</Text>}
       />
     </View>
   );
 }
+
+
+const ActionIcon: React.FC<ActionIconProps> = ({ label, icon, onPress }) => (
+  <TouchableOpacity style={styles.iconButton} onPress={onPress}>
+    <Ionicons name={icon as keyof typeof Ionicons.glyphMap} size={28} color="#fff" />
+    <Text style={styles.iconLabel}>{label}</Text>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -113,11 +118,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     marginBottom: 20,
-    shadowColor: '#2ecc71',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 10,
   },
   balanceLabel: {
     color: '#ecf0f1',
@@ -131,23 +131,21 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     flexWrap: 'wrap',
-    marginBottom: 20,
+    justifyContent: 'space-between',
+    marginBottom: 25,
   },
-  actionButton: {
-  backgroundColor: '#2980b9',
-  padding: 15,
-  margin: 5,
-  borderRadius: 15,
-  flexBasis: '30%',
-  alignItems: 'center',
+  iconButton: {
+    width: '22%',
+    backgroundColor: '#1c1c1e',
+    borderRadius: 15,
+    paddingVertical: 16,
+    alignItems: 'center',
   },
-  actionText: {
+  iconLabel: {
     color: '#fff',
-    textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 16,
+    fontSize: 13,
+    marginTop: 8,
   },
   filterRow: {
     flexDirection: 'row',
@@ -158,17 +156,16 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 20,
-    backgroundColor: '#dcdde1',
+    backgroundColor: '#2c2c2e',
   },
   filterActive: {
     backgroundColor: '#27ae60',
   },
   filterText: {
-    color: '#2c3e50',
+    color: '#fff',
     fontWeight: '500',
   },
   filterTextActive: {
-    color: '#fff',
     fontWeight: 'bold',
   },
   transactionItem: {
@@ -179,11 +176,11 @@ const styles = StyleSheet.create({
     borderColor: '#444',
   },
   transactionTitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#ecf0f1',
   },
   transactionAmount: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
   },
   noData: {
