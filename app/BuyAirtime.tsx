@@ -7,8 +7,11 @@ import { Ionicons } from '@expo/vector-icons';
 export default function BuyAirtime() {
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
-  const { buyAirtime } = useZayma(); // You’ll add this function in the context
+  const { buyAirtime } = useZayma(); 
   const router = useRouter();
+  const [showPin, setShowPin] =useState(false);
+  const [pin, setPin] = useState('');
+  const [error, setError] = useState('');
 
   const handleBuy = () => {
     const amountNum = parseFloat(amount);
@@ -23,6 +26,8 @@ export default function BuyAirtime() {
       Alert.alert('Error', 'Please enter a valid phone number starting with 07 or 01.');
       return;
     }
+
+    setShowPin(true);
 
     Alert.alert(
       'Confirm Purchase',
@@ -45,7 +50,22 @@ export default function BuyAirtime() {
     );
   };
 
+  const handleConfirmPin = () => {
+    if (pin === '1234') {
+      const amountNum = parseFloat(amount);
+      buyAirtime(amountNum, phone);
+      setShowPin(false);
+      setPin('');
+      setError('');
+      Alert.alert('Sccess', `Bought Ksh ${amountNum} airtime for ${phone}`);
+      router.back();
+    } else {
+      setError('Incorrect PIN. Please Try Again.');
+    }
+  };
+
   return (
+    <>
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
@@ -83,6 +103,31 @@ export default function BuyAirtime() {
         </TouchableOpacity>
       </View>
     </View>
+    {showPin && (
+      <View style={styles.pinOverlay}>
+        <View style={styles.pinBox}>
+          <Text style={styles.label}>Enter PIN to Confirm</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="****"
+            placeholderTextColor="#aaa"
+            secureTextEntry
+            keyboardType="numeric"
+            value={pin}
+            onChangeText={setPin}
+            maxLength={4}
+          />
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          <TouchableOpacity style={styles.buyBtn} onPress={handleConfirmPin}>
+            <Text style={styles.buyText}>Confirm</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cancelBtn} onPress={() => setShowPin(false)}>
+            <Text style={styles.cancelText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )}
+  </>
   );
 }
 
@@ -137,4 +182,27 @@ const styles = StyleSheet.create({
     color: '#aaa',
     fontSize: 14,
   },
+  pinOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  pinBox: {
+    backgroundColor: '#1c1c1e',
+    padding: 25,
+    borderRadius: 15,
+    width: '100%',
+  },
+  errorText: {
+    color: '#e74c3c',
+    textAlign: 'center',
+    marginBottom: 10,
+  }
+  
 });
