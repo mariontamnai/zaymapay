@@ -12,6 +12,7 @@ export default function BuyAirtime() {
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleBuy = () => {
     const amountNum = parseFloat(amount);
@@ -27,7 +28,6 @@ export default function BuyAirtime() {
       return;
     }
 
-    // ✅ Just show PIN overlay
     setShowPin(true);
   };
 
@@ -35,13 +35,14 @@ export default function BuyAirtime() {
     if (pin === '1234') {
       const amountNum = parseFloat(amount);
       buyAirtime(amountNum, phone);
+      setIsLoading(false);
       setShowPin(false);
       setPin('');
       setError('');
       Alert.alert('Success', `Bought Ksh ${amountNum} airtime for ${phone}`);
       router.back();
     } else {
-      setError('Incorrect PIN. Please try again.');
+      setError('Please enter your PIN to confirm the purchase.');
     }
   };
 
