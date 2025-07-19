@@ -33,6 +33,7 @@ export default function BuyAirtime() {
 
   const handleConfirmPin = () => {
     if (pin === '1234') {
+      setIsLoading(true);
       const amountNum = parseFloat(amount);
       buyAirtime(amountNum, phone);
       setIsLoading(false);
